@@ -26,8 +26,10 @@ async function clientConnect() {
 clientConnect();
 
 import { getUsers } from "../controllers/getUsers";
+import { getUserById } from "../controllers/getUserById";
 
-app.get("/resources", getUsers);
+app.get("/users", getUsers);
+app.get("/users/:id", getUserById);
 
 //Start the server on the given port
 const port = process.env.PORT;
