@@ -8,7 +8,6 @@ import {
 
 export const updateATicket = async (req: Request, res: Response) => {
   const board_id = parseInt(req.params.board_id);
-  const ticket_id = parseInt(req.params.ticket_id);
 
   const { ticket_name, description, assigned_to, priority_order, column_id } =
     req.body;

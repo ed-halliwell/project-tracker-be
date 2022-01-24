@@ -41,7 +41,7 @@ app.get("/users/:user_id/boards", getBoardsForUser);
 app.get("/users/:user_id/boards/:board_id/tickets", getAllBoardDataForUserById);
 app.get("/users/:user_id/boards/:board_id/columns", getAllColumnDataForABoard);
 
-app.patch<{ id: string }, {}, Partial<ITicket>>(
+app.patch<{ id: string }, Partial<ITicket>>(
   "/users/:user_id/boards/:board_id/tickets/:ticket_id",
   updateATicket
 );
