@@ -7,3 +7,7 @@ inner join columns as col on t.column_id = col.id
 inner join users as u on t.assigned_to = u.id
 where b.created_by = $1
 and t.board_id = $2`;
+
+export const getAllColumnDataOnABoard = `
+select * from columns as col
+where col.board_id = $1`;
