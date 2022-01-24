@@ -27,9 +27,11 @@ clientConnect();
 
 import { getUsers } from "../controllers/getUsers";
 import { getUserById } from "../controllers/getUserById";
+import { getBoardsForUser } from "../controllers/getBoardsForUser";
 
 app.get("/users", getUsers);
-app.get("/users/:id", getUserById);
+app.get("/users/:user_id", getUserById);
+app.get("/users/:user_id/boards", getBoardsForUser);
 
 //Start the server on the given port
 const port = process.env.PORT;
