@@ -11,3 +11,17 @@ and t.board_id = $2`;
 export const getAllColumnDataOnABoard = `
 select * from columns as col
 where col.board_id = $1`;
+
+export const addATicketToBoard = `
+INSERT INTO tickets (
+    board_id, column_id, ticket_name, description, assigned_to, created_at, created_by, priority_order
+) VALUES 
+($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, $6, $7) RETURNING *
+`;
+
+export const removeATicketFromBoard = `
+DELETE FROM tickets 
+WHERE board_id = $1
+AND id = $2
+RETURNING *
+`;
