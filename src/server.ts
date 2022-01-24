@@ -2,6 +2,7 @@ import { Client } from "pg";
 import { config } from "dotenv";
 import express from "express";
 import cors from "cors";
+import { ITicket } from "./interfaces";
 
 const app = express();
 
@@ -32,12 +33,18 @@ import { getAllBoardDataForUserById } from "../controllers/getAllBoardDataForUse
 import { getAllColumnDataForABoard } from "../controllers/getColumnDataByIdForABoard";
 import { createATicket } from "../controllers/createATicket";
 import { deleteATicket } from "../controllers/deleteATicket";
+import { updateATicket } from "../controllers/updateATicket";
 
 app.get("/users", getUsers);
 app.get("/users/:user_id", getUserById);
 app.get("/users/:user_id/boards", getBoardsForUser);
 app.get("/users/:user_id/boards/:board_id/tickets", getAllBoardDataForUserById);
 app.get("/users/:user_id/boards/:board_id/columns", getAllColumnDataForABoard);
+
+app.patch<{ id: string }, {}, Partial<ITicket>>(
+  "/users/:user_id/boards/:board_id/tickets/:ticket_id",
+  updateATicket
+);
 
 app.post(
   "/users/:user_id/boards/:board_id/columns/:column_id/tickets",
