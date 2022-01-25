@@ -9,7 +9,7 @@ export const getDataForASpecificBoard = async (req: Request, res: Response) => {
     const dbRes = await client.query(getBoardDataById, [board_id]);
     if (dbRes.rows.length > 0) {
       res.status(200).json({
-        message: "Successfully retrieved metadata for columns",
+        message: "Successfully retrieved metadata for board",
         data: dbRes.rows,
       });
     } else {
