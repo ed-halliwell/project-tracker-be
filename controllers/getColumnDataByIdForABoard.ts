@@ -1,6 +1,9 @@
 import { client } from "../src/server";
 import type { Request, Response } from "express";
-import { getTicketDataByColumnIdOnABoard } from "../src/sqlQueries";
+import {
+  getTicketDataByColumnIdOnABoard,
+  getColumnMetaData,
+} from "../src/sqlQueries";
 
 export const getColumnDataByIdForABoard = async (
   req: Request,
@@ -23,14 +26,27 @@ export const getColumnDataByIdForABoard = async (
     );
     if (checkColumnExists) {
       try {
-        const dbRes = await client.query(getTicketDataByColumnIdOnABoard, [
+        const ticketInfo = await client.query(getTicketDataByColumnIdOnABoard, [
           board_id,
           column_id,
         ]);
-        if (dbRes.rows.length > 0) {
+        const boardColumnInfo = await client.query(getColumnMetaData, [
+          board_id,
+          column_id,
+        ]);
+
+        if (ticketInfo.rows.length > 0) {
           res.status(200).json({
             message: "Successfully retrieved data for column",
-            data: dbRes.rows,
+            columnData: boardColumnInfo.rows,
+            ticketData: ticketInfo.rows,
+          });
+        }
+        if (ticketInfo.rows.length === 0) {
+          res.status(404).json({
+            message: "No column found",
+            columnData: boardColumnInfo.rows,
+            ticketData: ticketInfo.rows,
           });
         } else {
           res.status(500).json({
