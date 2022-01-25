@@ -30,7 +30,8 @@ import { getUsers } from "../controllers/getUsers";
 import { getUserById } from "../controllers/getUserById";
 import { getBoardsForUser } from "../controllers/getBoardsForUser";
 import { getAllBoardDataForUserById } from "../controllers/getAllBoardDataForUserById";
-import { getAllColumnDataForABoard } from "../controllers/getColumnDataByIdForABoard";
+import { getColumnDataByIdForABoard } from "../controllers/getColumnDataByIdForABoard";
+import { getAllColumnDataForABoard } from "../controllers/getAllColumnDataForABoard";
 import { createATicket } from "../controllers/createATicket";
 import { deleteATicket } from "../controllers/deleteATicket";
 import { updateATicket } from "../controllers/updateATicket";
@@ -40,8 +41,9 @@ app.get("/users", getUsers);
 app.get("/users/:user_id", getUserById);
 app.get("/users/:user_id/boards", getBoardsForUser);
 app.get("/boards/:board_id/tickets", getDataByBoardId);
+app.get("/boards/:board_id/columns/:column_id", getColumnDataByIdForABoard);
 app.get("/users/:user_id/boards/:board_id/tickets", getAllBoardDataForUserById);
-app.get("/users/:user_id/boards/:board_id/columns", getAllColumnDataForABoard);
+app.get("/boards/:board_id/columns/:id", getAllColumnDataForABoard);
 
 app.patch<{ id: string }, Partial<ITicket>>(
   "/users/:user_id/boards/:board_id/tickets/:ticket_id",
