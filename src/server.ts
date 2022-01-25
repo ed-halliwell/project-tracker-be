@@ -36,12 +36,14 @@ import { createATicket } from "../controllers/createATicket";
 import { deleteATicket } from "../controllers/deleteATicket";
 import { updateATicket } from "../controllers/updateATicket";
 import { getDataByBoardId } from "../controllers/getDataByBoardId";
+import { getDataForASpecificBoard } from "../controllers/getDataForASpecificBoard";
 import { getColumnMetaDataForABoard } from "../controllers/getColumnMetaDataForABoard";
 
 app.get("/users", getUsers);
 app.get("/users/:user_id", getUserById);
 app.get("/users/:user_id/boards", getBoardsForUser);
 app.get("/boards/:board_id/tickets", getDataByBoardId);
+app.get("/boards/:board_id/", getDataForASpecificBoard);
 app.get("/boards/:board_id/columns/:column_id", getColumnDataByIdForABoard);
 app.get("/boards/:board_id/column_data", getColumnMetaDataForABoard);
 app.get("/users/:user_id/boards/:board_id/tickets", getAllBoardDataForUserById);

@@ -24,6 +24,12 @@ inner join users as u on t.assigned_to = u.id
 where t.board_id = $1
 `;
 
+export const getBoardDataById = `
+SELECT b.id, b.board_name, b.created_by, u.user_name, b.created_at FROM boards as b 
+inner join users as u on b.created_by = u.id
+WHERE b.id = $1
+`;
+
 export const getTicketDataByColumnIdOnABoard = `
 select b.id as board_id, b.board_name, col.id as column_id, col.column_name, col.column_order, 
 t.id as ticket_id,  t.ticket_name, t.description, t.assigned_to, 
