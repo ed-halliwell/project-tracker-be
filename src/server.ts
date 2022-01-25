@@ -50,14 +50,11 @@ app.get("/users/:user_id/boards/:board_id/tickets", getAllBoardDataForUserById);
 app.get("/boards/:board_id/columns/:id", getAllColumnDataForABoard);
 
 app.patch<{ id: string }, Partial<ITicket>>(
-  "/users/:user_id/boards/:board_id/tickets/:ticket_id",
+  "/boards/:board_id/tickets/:ticket_id",
   updateATicket
 );
 
-app.post(
-  "/users/:user_id/boards/:board_id/columns/:column_id/tickets",
-  createATicket
-);
+app.post("/boards/:board_id/columns/:column_id/tickets", createATicket);
 
 app.delete(
   "/users/:user_id/boards/:board_id/tickets/:ticket_id",
