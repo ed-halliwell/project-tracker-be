@@ -46,6 +46,7 @@ inner join users as u on t.assigned_to = u.id
 inner join users as u2 on t.created_by = u2.id
 where t.board_id = $1
 and col.id = $2
+order by t.priority_order desc
 `;
 
 export const getAllColumnDataOnABoard = `
