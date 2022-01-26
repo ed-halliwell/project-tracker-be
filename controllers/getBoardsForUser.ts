@@ -1,6 +1,9 @@
 import { client } from "../src/server";
 import type { Request, Response } from "express";
-import { getBoardDataForAUser } from "../src/sqlQueries";
+import {
+  getBoardDataForAUser,
+  getBoardSharedWithAUser,
+} from "../src/sqlQueries";
 
 export const getBoardsForUser = async (req: Request, res: Response) => {
   const user_id = parseInt(req.params.user_id);
@@ -9,11 +12,15 @@ export const getBoardsForUser = async (req: Request, res: Response) => {
   ]);
   if (getUserById.rows.length > 0) {
     try {
-      const dbRes = await client.query(getBoardDataForAUser, [user_id]);
-      if (dbRes.rows.length > 0) {
+      const userIsOwner = await client.query(getBoardDataForAUser, [user_id]);
+      const userIsShared = await client.query(getBoardSharedWithAUser, [
+        user_id,
+      ]);
+      if (userIsOwner.rows.length > 0 || userIsShared.rows.length > 0) {
         res.status(200).json({
           message: `Successfully retrieved boards for user Id: ${user_id}`,
-          data: dbRes.rows,
+          ownedBoards: userIsOwner.rows,
+          sharedBoards: userIsShared.rows,
         });
       } else {
         res.status(200).json({

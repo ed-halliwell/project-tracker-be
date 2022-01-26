@@ -4,6 +4,14 @@ inner join users as u on b.created_by = u.id
 WHERE created_by = $1
 `;
 
+export const getBoardSharedWithAUser = `
+SELECT b.id, b.board_name, b.created_by, u.user_name, b.created_at, shared.member_role FROM boards as b
+inner join users as u on b.created_by = u.id
+inner JOIN (select board_id, member_role from board_members
+where user_id = $1
+and member_role != 'Owner') as shared on b.id = shared.board_id
+`;
+
 export const getAllBoardData = `
 select b.id as board_id, b.board_name, col.id as column_id, col.column_name, col.column_order, 
 t.id as ticket_id,  t.ticket_name, t.description, t.assigned_to, 
