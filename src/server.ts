@@ -56,10 +56,7 @@ app.patch<{ id: string }, Partial<ITicket>>(
 
 app.post("/boards/:board_id/columns/:column_id/tickets", createATicket);
 
-app.delete(
-  "/users/:user_id/boards/:board_id/tickets/:ticket_id",
-  deleteATicket
-);
+app.delete("/boards/:board_id/tickets/:ticket_id", deleteATicket);
 
 //Start the server on the given port
 const port = process.env.PORT;
