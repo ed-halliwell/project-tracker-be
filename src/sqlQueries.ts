@@ -82,3 +82,10 @@ UPDATE tickets SET column_id = $3 WHERE board_id = $1 and id = $2 RETURNING *
 export const updateATicketPriority = `
 UPDATE tickets SET priority_order = $3 WHERE board_id = $1 and id = $2 RETURNING *
 `;
+
+export const getAllBoardMemberData = `
+select bm.user_id, u.user_name, bm.member_role, bm.date_added from board_members as bm
+inner join users as u on bm.user_id = u.id
+where bm.board_id = $1
+order by user_id asc
+`;
