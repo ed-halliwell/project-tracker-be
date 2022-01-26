@@ -39,6 +39,7 @@ import { getDataByBoardId } from "../controllers/getDataByBoardId";
 import { getBoardMembersForABoard } from "../controllers/getBoardMembersForABoard";
 import { getDataForASpecificBoard } from "../controllers/getDataForASpecificBoard";
 import { getColumnMetaDataForABoard } from "../controllers/getColumnMetaDataForABoard";
+import { updateColumnForATicket } from "../controllers/updateColumnForATicket";
 
 app.get("/users", getUsers);
 app.get("/users/:user_id", getUserById);
@@ -54,6 +55,11 @@ app.get("/boards/:board_id/columns/:id", getAllColumnDataForABoard);
 app.patch<{ id: string }, Partial<ITicket>>(
   "/boards/:board_id/tickets/:ticket_id",
   updateATicket
+);
+
+app.patch<{ id: string }, Partial<ITicket>>(
+  "/boards/:board_id/tickets/:ticket_id/column_move",
+  updateColumnForATicket
 );
 
 app.post("/boards/:board_id/columns/:column_id/tickets", createATicket);

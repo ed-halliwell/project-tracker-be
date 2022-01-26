@@ -47,11 +47,12 @@ CREATE TABLE board_members (
 INSERT INTO board_members (
     board_id, user_id, member_role, date_added
 ) VALUES 
-(1, 2, 'Team Member', CURRENT_TIMESTAMP)
+(1, 1, 'Owner', CURRENT_TIMESTAMP)
 (1, 2, 'Team Member', CURRENT_TIMESTAMP)
 
 CREATE TYPE member_role AS ENUM 
 (
+  'Owner',
   'Admin', 
   'Team Member',
   'Viewer'
