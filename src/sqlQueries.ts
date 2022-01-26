@@ -75,6 +75,10 @@ export const updateATicketAssignedTo = `
 UPDATE tickets SET assigned_to = $3 WHERE board_id = $1 and id = $2 RETURNING *
 `;
 
-export const updateATicketColumnAndPriority = `
-UPDATE tickets SET column_id = $3, priority_order = $4 WHERE board_id = $1 and id = $2 RETURNING *
+export const updateATicketColumn = `
+UPDATE tickets SET column_id = $3 WHERE board_id = $1 and id = $2 RETURNING *
+`;
+
+export const updateATicketPriority = `
+UPDATE tickets SET priority_order = $3 WHERE board_id = $1 and id = $2 RETURNING *
 `;

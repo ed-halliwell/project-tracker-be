@@ -3,7 +3,8 @@ import type { Request, Response } from "express";
 import {
   updateATicketNameDescription,
   updateATicketAssignedTo,
-  updateATicketColumnAndPriority,
+  updateATicketColumn,
+  updateATicketPriority,
 } from "../src/sqlQueries";
 
 export const updateATicket = async (req: Request, res: Response) => {
@@ -70,18 +71,40 @@ export const updateATicket = async (req: Request, res: Response) => {
           console.error(error.message);
         }
       }
-
-      // change column and priority order
-      if (column_id && priority_order) {
+      // change priority order
+      if (priority_order) {
         try {
-          const updateColumnAndPriority = await client.query(
-            updateATicketColumnAndPriority,
-            [board_id, ticket_id, column_id, priority_order]
-          );
-          if (updateColumnAndPriority.rows.length > 0) {
+          const updatePriority = await client.query(updateATicketPriority, [
+            board_id,
+            ticket_id,
+            priority_order,
+          ]);
+          if (updatePriority.rows.length > 0) {
             res.status(200).json({
-              message: "Successfully updated this ticket's column and priority",
-              data: updateColumnAndPriority.rows,
+              message: "Successfully updated this ticket's priority",
+              data: updatePriority.rows,
+            });
+          } else {
+            res.status(500).json({
+              message: "Something went wrong",
+            });
+          }
+        } catch (error) {
+          console.error(error.message);
+        }
+      }
+      // change column
+      if (column_id) {
+        try {
+          const updateColumn = await client.query(updateATicketColumn, [
+            board_id,
+            ticket_id,
+            column_id,
+          ]);
+          if (updateColumn.rows.length > 0) {
+            res.status(200).json({
+              message: "Successfully updated this ticket's column",
+              data: updateColumn.rows,
             });
           } else {
             res.status(500).json({
