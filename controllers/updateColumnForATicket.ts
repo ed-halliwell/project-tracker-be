@@ -29,7 +29,7 @@ export const updateColumnForATicket = async (req: Request, res: Response) => {
 
         let nextColumnUp;
         let nextColumnDown;
-        let currentColumnId = getTicketByBoardId.rows[0].column_id;
+        const currentColumnId = getTicketByBoardId.rows[0].column_id;
         let newPriorityValue;
         let newColumnValue;
 
