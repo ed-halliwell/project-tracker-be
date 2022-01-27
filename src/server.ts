@@ -40,6 +40,8 @@ import { getBoardMembersForABoard } from "../controllers/getBoardMembersForABoar
 import { getDataForASpecificBoard } from "../controllers/getDataForASpecificBoard";
 import { getColumnMetaDataForABoard } from "../controllers/getColumnMetaDataForABoard";
 import { updateColumnForATicket } from "../controllers/updateColumnForATicket";
+import { addBoardMember } from "../controllers/addBoardMember";
+import { removeBoardMember } from "../controllers/removeBoardMember";
 
 app.get("/users", getUsers);
 app.get("/users/:user_id", getUserById);
@@ -63,8 +65,10 @@ app.patch<{ id: string }, Partial<ITicket>>(
 );
 
 app.post("/boards/:board_id/columns/:column_id/tickets", createATicket);
+app.post("/boards/:board_id/board_members", addBoardMember);
 
 app.delete("/boards/:board_id/tickets/:ticket_id", deleteATicket);
+app.delete("/boards/:board_id/board_members/:user_id", removeBoardMember);
 
 //Start the server on the given port
 const port = process.env.PORT;

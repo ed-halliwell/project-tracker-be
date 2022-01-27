@@ -30,6 +30,7 @@ INSERT INTO boards (
 
 CREATE TYPE member_role AS ENUM 
 (
+  'Owner',
   'Admin', 
   'Team Member',
   'Viewer'

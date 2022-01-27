@@ -103,3 +103,17 @@ select t.id as ticket_id, c.id as column_id, c.column_order from tickets as t
 inner join columns as c on t.column_id = c.id
 where t.id = $1
 `;
+
+export const addABoardMember = `
+INSERT INTO board_members (
+    board_id, user_id, member_role, date_added
+) VALUES 
+($1, $2, $3, CURRENT_TIMESTAMP) RETURNING *
+`;
+
+export const removeABoardMember = `
+DELETE FROM board_members 
+WHERE board_id = $1
+AND user_id = $2
+RETURNING *
+`;
