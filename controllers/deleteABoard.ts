@@ -15,17 +15,17 @@ export const deleteABoard = async (req: Request, res: Response) => {
   }
   if (checkBoardExists.rows.length > 0) {
     try {
-      const deleteTickets = await client.query(
+      await client.query(
         "DELETE FROM tickets where board_id = $1 RETURNING *",
         [board_id]
       );
       //   console.log(deleteTickets.rows);
-      const deleteBoardMembers = await client.query(
+      await client.query(
         "DELETE FROM board_members where board_id = $1 RETURNING *",
         [board_id]
       );
       //   console.log(deleteBoardMembers.rows);
-      const deleteColumns = await client.query(
+      await client.query(
         "DELETE FROM columns where board_id = $1 RETURNING *",
         [board_id]
       );

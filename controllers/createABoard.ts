@@ -33,7 +33,7 @@ export const createABoard = async (req: Request, res: Response) => {
         const newBoardId = newBoard.rows[0].id;
 
         // add creating user as Owner in board members table
-        const setOwner = await client.query(
+        await client.query(
           "INSERT INTO board_members (board_id, user_id, member_role) VALUES ($1, $2, 'Owner') RETURNING *",
           [newBoardId, user_id]
         );
