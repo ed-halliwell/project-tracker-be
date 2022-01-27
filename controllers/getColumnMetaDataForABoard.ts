@@ -12,13 +12,14 @@ export const getColumnMetaDataForABoard = async (
     "SELECT * FROM boards where id = $1",
     [board_id]
   );
-
+  console.log("after board exists check", getBoardById.rows);
   if (getBoardById.rows.length > 0) {
     try {
       const dbRes = await client.query(
-        "SELECT id as column_ids FROM columns WHERE board_id = $1",
+        "SELECT id FROM columns WHERE board_id = $1",
         [board_id]
       );
+      console.log(dbRes.rows);
       if (dbRes.rows.length > 0) {
         res.status(200).json({
           message: "Successfully retrieved metadata for columns",

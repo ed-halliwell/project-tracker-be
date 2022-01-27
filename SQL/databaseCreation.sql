@@ -11,7 +11,11 @@ INSERT INTO users (
     user_name, email, created_at, profile_image, is_admin
 ) VALUES 
 ('Bill Gates', 'bill@fakeemail.com', CURRENT_TIMESTAMP, null, true),
-('Larry Page', 'larry@fakeemail.com', CURRENT_TIMESTAMP, null, false)
+('Larry Page', 'larry@fakeemail.com', CURRENT_TIMESTAMP, null, false),
+('Elon Musk', 'elon@fakeemail.com', CURRENT_TIMESTAMP, null, false),
+('Mark Zuckerberg', 'mark@fakeemail.com', CURRENT_TIMESTAMP, null, false),
+('Sundar Pichai', 'sundar@fakeemail.com', CURRENT_TIMESTAMP, null, false),
+('Jack Dorsey', 'jack@fakeemail.com', CURRENT_TIMESTAMP, null, false)
 
 
 CREATE TABLE boards ( 
@@ -50,6 +54,7 @@ INSERT INTO board_members (
 ) VALUES 
 (1, 1, 'Owner', CURRENT_TIMESTAMP)
 (1, 2, 'Team Member', CURRENT_TIMESTAMP)
+
 
 CREATE TYPE member_role AS ENUM 
 (

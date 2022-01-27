@@ -42,6 +42,7 @@ import { getColumnMetaDataForABoard } from "../controllers/getColumnMetaDataForA
 import { updateColumnForATicket } from "../controllers/updateColumnForATicket";
 import { addBoardMember } from "../controllers/addBoardMember";
 import { removeBoardMember } from "../controllers/removeBoardMember";
+import { createABoard } from "../controllers/createABoard";
 
 app.get("/users", getUsers);
 app.get("/users/:user_id", getUserById);
@@ -66,6 +67,7 @@ app.patch<{ id: string }, Partial<ITicket>>(
 
 app.post("/boards/:board_id/columns/:column_id/tickets", createATicket);
 app.post("/boards/:board_id/board_members", addBoardMember);
+app.post("/boards", createABoard);
 
 app.delete("/boards/:board_id/tickets/:ticket_id", deleteATicket);
 app.delete("/boards/:board_id/board_members/:user_id", removeBoardMember);

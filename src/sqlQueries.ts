@@ -117,3 +117,21 @@ WHERE board_id = $1
 AND user_id = $2
 RETURNING *
 `;
+
+export const createABoardInsertColumns = `
+INSERT INTO columns (
+    board_id, column_name, column_order
+) VALUES 
+($1, 'To do', 1),
+($1, 'In Progress', 2),
+($1, 'Done', 3) RETURNING *
+`;
+
+export const createABoardInsertTickets = `
+INSERT INTO tickets (
+    board_id, column_id, ticket_name, description, assigned_to, created_by, priority_order
+) VALUES 
+($1, $2, 'Ticket Todo', 'Here are some tickets...', $5, $5, 1),
+($1, $3, 'Ticket In Progress', '...to get your started...', $5, $5, 1),
+($1, $4, 'Done Ticket', '...you can always delete them', $5, $5, 1) RETURNING *
+`;
