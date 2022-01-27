@@ -97,3 +97,9 @@ inner join users as u on bm.user_id = u.id
 where bm.board_id = $1
 order by user_id asc
 `;
+
+export const findColumnDataForTicket = `
+select t.id as ticket_id, c.id as column_id, c.column_order from tickets as t 
+inner join columns as c on t.column_id = c.id
+where t.id = $1
+`;

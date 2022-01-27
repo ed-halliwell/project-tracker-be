@@ -1,6 +1,9 @@
 import { client } from "../src/server";
 import type { Request, Response } from "express";
-import { updateATicketColumn } from "../src/sqlQueries";
+import {
+  updateATicketColumn,
+  findColumnDataForTicket,
+} from "../src/sqlQueries";
 
 export const updateColumnForATicket = async (req: Request, res: Response) => {
   const board_id = parseInt(req.params.board_id);
@@ -22,24 +25,33 @@ export const updateColumnForATicket = async (req: Request, res: Response) => {
       );
 
       if (getTicketByBoardId.rows.length > 0) {
-        const columnIds = await client.query(
-          "select id from columns as col where col.board_id = $1",
+        const columnIDAndOrder = await client.query(
+          "select id, column_order from columns where board_id = $1 order by column_order asc",
           [board_id]
         );
 
+        const findColumnDataForCurrentTicket = await client.query(
+          findColumnDataForTicket,
+          [ticket_id]
+        );
+        // find the column that has the next order up compared to the one the ticket is currently in
+        // get the id for that column
+
         let nextColumnUp;
         let nextColumnDown;
-        const currentColumnId = getTicketByBoardId.rows[0].column_id;
+        const currentColumnPosition =
+          findColumnDataForCurrentTicket.rows[0].column_order;
         let newPriorityValue;
         let newColumnValue;
+        console.log(currentColumnPosition);
 
         if (type === "forward") {
-          if (columnIds) {
-            for (const column of columnIds.rows) {
-              if (column.id > currentColumnId) {
+          if (columnIDAndOrder) {
+            for (const column of columnIDAndOrder.rows) {
+              if (column.column_order > currentColumnPosition) {
                 if (nextColumnUp === undefined) {
                   nextColumnUp = column.id;
-                } else if (column.id < nextColumnUp) {
+                } else if (column.column_order < nextColumnUp) {
                   nextColumnUp = column.id;
                 }
               }
@@ -52,13 +64,13 @@ export const updateColumnForATicket = async (req: Request, res: Response) => {
             newColumnValue = nextColumnUp;
           }
         } else if (type === "back") {
-          if (columnIds) {
-            for (const column of columnIds.rows) {
-              if (column.id < currentColumnId) {
+          if (columnIDAndOrder) {
+            for (const column of columnIDAndOrder.rows) {
+              if (column.column_order < currentColumnPosition) {
                 if (nextColumnDown === undefined) {
                   nextColumnDown = column.id;
-                } else if (column.id > nextColumnDown) {
-                  nextColumnDown = column.id;
+                } else if (column.column_order > nextColumnDown) {
+                  nextColumnDown = column.column_order;
                 }
               }
             }
