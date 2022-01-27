@@ -38,7 +38,7 @@ export const updateColumnForATicket = async (req: Request, res: Response) => {
         // get the id for that column
 
         let nextColumnUp;
-        let nextColumnDown;
+        let nextColumnDown: { id: number; column_order: number };
         const currentColumnPosition =
           findColumnDataForCurrentTicket.rows[0].column_order;
         let newPriorityValue;
@@ -50,7 +50,7 @@ export const updateColumnForATicket = async (req: Request, res: Response) => {
               if (column.column_order > currentColumnPosition) {
                 if (nextColumnUp === undefined) {
                   nextColumnUp = column.id;
-                } else if (column.column_order < nextColumnUp) {
+                } else if (column.column_order < currentColumnPosition + 1) {
                   nextColumnUp = column.id;
                 }
               }
@@ -67,19 +67,22 @@ export const updateColumnForATicket = async (req: Request, res: Response) => {
             for (const column of columnIDAndOrder.rows) {
               if (column.column_order < currentColumnPosition) {
                 if (nextColumnDown === undefined) {
-                  nextColumnDown = column.id;
-                } else if (column.column_order > nextColumnDown) {
-                  nextColumnDown = column.column_order;
+                  nextColumnDown = column;
+                } else if (
+                  column.column_order < currentColumnPosition &&
+                  column.column_order > nextColumnDown.column_order
+                ) {
+                  nextColumnDown = column;
                 }
               }
             }
           }
           const getMaxPriorityInNewColumn = await client.query(
             "select max(priority_order) from tickets where column_id = $1",
-            [nextColumnDown]
+            [nextColumnDown.id]
           );
           newPriorityValue = getMaxPriorityInNewColumn.rows[0].max + 1;
-          newColumnValue = nextColumnDown;
+          newColumnValue = nextColumnDown.id;
         }
 
         if (
