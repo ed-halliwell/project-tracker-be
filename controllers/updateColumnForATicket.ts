@@ -43,7 +43,6 @@ export const updateColumnForATicket = async (req: Request, res: Response) => {
           findColumnDataForCurrentTicket.rows[0].column_order;
         let newPriorityValue;
         let newColumnValue;
-        console.log(currentColumnPosition);
 
         if (type === "forward") {
           if (columnIDAndOrder) {

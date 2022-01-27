@@ -39,8 +39,7 @@ export const createABoard = async (req: Request, res: Response) => {
         let firstColumn = createColumns.rows[0].id;
         let secondColumn = createColumns.rows[1].id;
         let thirdColumn = createColumns.rows[2].id;
-        console.log(firstColumn, secondColumn, thirdColumn);
-        console.log("just before ticket creation");
+
         // create 1 ticket in each column
         const createTickets = await client.query(createABoardInsertTickets, [
           newBoardId,
@@ -50,8 +49,6 @@ export const createABoard = async (req: Request, res: Response) => {
           user_id,
         ]);
 
-        console.log("just after ticket creation");
-        console.log(createTickets.rows);
         if (createTickets.rows.length > 0) {
           res.status(200).json({
             message: "Successfully created board",
