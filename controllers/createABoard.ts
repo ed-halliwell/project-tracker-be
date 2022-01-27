@@ -31,14 +31,14 @@ export const createABoard = async (req: Request, res: Response) => {
           [board_name, user_id]
         );
         // create 3 columns, get ids back
-        let newBoardId = newBoard.rows[0].id;
+        const newBoardId = newBoard.rows[0].id;
         const createColumns = await client.query(createABoardInsertColumns, [
           newBoardId,
         ]);
 
-        let firstColumn = createColumns.rows[0].id;
-        let secondColumn = createColumns.rows[1].id;
-        let thirdColumn = createColumns.rows[2].id;
+        const firstColumn = createColumns.rows[0].id;
+        const secondColumn = createColumns.rows[1].id;
+        const thirdColumn = createColumns.rows[2].id;
 
         // create 1 ticket in each column
         const createTickets = await client.query(createABoardInsertTickets, [

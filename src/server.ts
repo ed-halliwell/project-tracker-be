@@ -43,6 +43,7 @@ import { updateColumnForATicket } from "../controllers/updateColumnForATicket";
 import { addBoardMember } from "../controllers/addBoardMember";
 import { removeBoardMember } from "../controllers/removeBoardMember";
 import { createABoard } from "../controllers/createABoard";
+import { deleteABoard } from "../controllers/deleteABoard";
 
 app.get("/users", getUsers);
 app.get("/users/:user_id", getUserById);
@@ -71,6 +72,7 @@ app.post("/boards", createABoard);
 
 app.delete("/boards/:board_id/tickets/:ticket_id", deleteATicket);
 app.delete("/boards/:board_id/board_members/:user_id", removeBoardMember);
+app.delete("/boards/:board_id/", deleteABoard);
 
 //Start the server on the given port
 const port = process.env.PORT;
