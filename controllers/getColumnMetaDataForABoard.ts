@@ -16,7 +16,7 @@ export const getColumnMetaDataForABoard = async (
   if (getBoardById.rows.length > 0) {
     try {
       const dbRes = await client.query(
-        "SELECT id as column_ids FROM columns WHERE board_id = $1",
+        "SELECT id as column_id, column_order FROM columns WHERE board_id = $1",
         [board_id]
       );
       if (dbRes.rows.length > 0) {
