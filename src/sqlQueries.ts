@@ -75,12 +75,8 @@ AND id = $2
 RETURNING *
 `;
 
-export const updateATicketNameDescription = `
-UPDATE tickets SET ticket_name = $3, description = $4 WHERE board_id = $1 and id = $2 RETURNING *
-`;
-
-export const updateATicketAssignedTo = `
-UPDATE tickets SET assigned_to = $3 WHERE board_id = $1 and id = $2 RETURNING *
+export const updateATicketNameDescriptionAssignee = `
+UPDATE tickets SET ticket_name = $3, description = $4, assigned_to = $5 WHERE board_id = $1 and id = $2 RETURNING *
 `;
 
 export const updateATicketColumn = `

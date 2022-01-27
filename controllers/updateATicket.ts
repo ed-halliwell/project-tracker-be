@@ -1,9 +1,7 @@
 import { client } from "../src/server";
 import type { Request, Response } from "express";
 import {
-  updateATicketNameDescription,
-  updateATicketAssignedTo,
-  //   updateATicketColumn,
+  updateATicketNameDescriptionAssignee,
   updateATicketPriority,
 } from "../src/sqlQueries";
 
@@ -25,17 +23,17 @@ export const updateATicket = async (req: Request, res: Response) => {
       [board_id, ticket_id]
     );
     if (getTicketByBoardId.rows.length > 0) {
-      // change ticket name and/or description
-      if (ticket_name && description) {
+      // change ticket name and/or description and/or assignee
+      if (ticket_name && description && assigned_to) {
         try {
           const updateNameAndDescription = await client.query(
-            updateATicketNameDescription,
-            [board_id, ticket_id, ticket_name, description]
+            updateATicketNameDescriptionAssignee,
+            [board_id, ticket_id, ticket_name, description, assigned_to]
           );
           if (updateNameAndDescription.rows.length > 0) {
             res.status(200).json({
               message:
-                "Successfully updated this ticket's name and/or description",
+                "Successfully updated this ticket's name, description and/or assignee",
               data: updateNameAndDescription.rows,
             });
           } else {
@@ -49,27 +47,27 @@ export const updateATicket = async (req: Request, res: Response) => {
       }
 
       // change assigned to
-      if (assigned_to) {
-        try {
-          const updateAssignedTo = await client.query(updateATicketAssignedTo, [
-            board_id,
-            ticket_id,
-            assigned_to,
-          ]);
-          if (updateAssignedTo.rows.length > 0) {
-            res.status(200).json({
-              message: "Successfully updated this ticket's assigned to value",
-              data: updateAssignedTo.rows,
-            });
-          } else {
-            res.status(500).json({
-              message: "Something went wrong",
-            });
-          }
-        } catch (error) {
-          console.error(error.message);
-        }
-      }
+      // if (assigned_to) {
+      //   try {
+      //     const updateAssignedTo = await client.query(updateATicketAssignedTo, [
+      //       board_id,
+      //       ticket_id,
+      //       assigned_to,
+      //     ]);
+      //     if (updateAssignedTo.rows.length > 0) {
+      //       res.status(200).json({
+      //         message: "Successfully updated this ticket's assigned to value",
+      //         data: updateAssignedTo.rows,
+      //       });
+      //     } else {
+      //       res.status(500).json({
+      //         message: "Something went wrong",
+      //       });
+      //     }
+      //   } catch (error) {
+      //     console.error(error.message);
+      //   }
+      // }
       // change priority order
       if (priority_order) {
         try {
