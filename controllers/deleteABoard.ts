@@ -19,22 +19,22 @@ export const deleteABoard = async (req: Request, res: Response) => {
         "DELETE FROM tickets where board_id = $1 RETURNING *",
         [board_id]
       );
-      console.log(deleteTickets.rows);
+      //   console.log(deleteTickets.rows);
       const deleteBoardMembers = await client.query(
         "DELETE FROM board_members where board_id = $1 RETURNING *",
         [board_id]
       );
-      console.log(deleteBoardMembers.rows);
+      //   console.log(deleteBoardMembers.rows);
       const deleteColumns = await client.query(
         "DELETE FROM columns where board_id = $1 RETURNING *",
         [board_id]
       );
-      console.log(deleteColumns.rows);
+      //   console.log(deleteColumns.rows);
       const deleteBoard = await client.query(
         "DELETE FROM boards where id = $1 RETURNING *",
         [board_id]
       );
-      console.log(deleteBoard.rows);
+      //   console.log(deleteBoard.rows);
 
       if (deleteBoard.rows.length > 0) {
         res.status(200).json({
