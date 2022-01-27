@@ -42,10 +42,10 @@ export const getColumnDataByIdForABoard = async (
             ticketData: ticketInfo.rows,
           });
         } else if (ticketInfo.rows.length === 0) {
-          res.status(404).json({
-            message: "No column found",
+          res.status(200).json({
+            message: "No tickets found in this column",
             columnData: boardColumnInfo.rows,
-            ticketData: ticketInfo.rows,
+            ticketData: [],
           });
         } else {
           res.status(500).json({
