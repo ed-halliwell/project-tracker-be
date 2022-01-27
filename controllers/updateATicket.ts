@@ -46,28 +46,6 @@ export const updateATicket = async (req: Request, res: Response) => {
         }
       }
 
-      // change assigned to
-      // if (assigned_to) {
-      //   try {
-      //     const updateAssignedTo = await client.query(updateATicketAssignedTo, [
-      //       board_id,
-      //       ticket_id,
-      //       assigned_to,
-      //     ]);
-      //     if (updateAssignedTo.rows.length > 0) {
-      //       res.status(200).json({
-      //         message: "Successfully updated this ticket's assigned to value",
-      //         data: updateAssignedTo.rows,
-      //       });
-      //     } else {
-      //       res.status(500).json({
-      //         message: "Something went wrong",
-      //       });
-      //     }
-      //   } catch (error) {
-      //     console.error(error.message);
-      //   }
-      // }
       // change priority order
       if (priority_order) {
         try {

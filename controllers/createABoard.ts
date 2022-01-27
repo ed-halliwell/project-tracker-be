@@ -30,8 +30,15 @@ export const createABoard = async (req: Request, res: Response) => {
           "INSERT INTO boards (board_name, created_by) VALUES ($1, $2) RETURNING id",
           [board_name, user_id]
         );
-        // create 3 columns, get ids back
         const newBoardId = newBoard.rows[0].id;
+
+        // add creating user as Owner in board members table
+        const setOwner = await client.query(
+          "INSERT INTO board_members (board_id, user_id, member_role) VALUES ($1, $2, 'Owner') RETURNING *",
+          [newBoardId, user_id]
+        );
+
+        // create 3 columns, get ids back
         const createColumns = await client.query(createABoardInsertColumns, [
           newBoardId,
         ]);
